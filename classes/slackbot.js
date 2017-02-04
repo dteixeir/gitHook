@@ -1,8 +1,10 @@
 var Bot = require('slackbots');
 var Slack = require('node-slack-upload');
-var config = require('../config.json');
-// var slack = new Slack(process.env.UPLOAD_KEY || config.UPLOAD_KEY);
 var users = [];
+
+if (process.env) {
+  var config = require('../config.json');
+}
 
 var bot = {
   message: function (body, message) {
