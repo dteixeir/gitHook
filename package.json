@@ -26,5 +26,8 @@
     "url": "https://github.com/dteixeir/gitHook.git"
   },
   "author": "Danny Teixeira",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nedb": "^1.8.0"
+  }
 }
