@@ -3,7 +3,7 @@ var parse = require('../classes/parse');
 module.exports = function (app, route) {
   app.post("/webhook", function (req, res, next) {
     try {
-      if (!req.body.message.isArray) {
+      if (!req.body.message instanceof Array) {
         res.send({ status: 400 });
       } else {
         parse.checkList(req.body.message);
