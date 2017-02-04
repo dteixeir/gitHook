@@ -2,12 +2,17 @@ var parse = require('../classes/parse');
 
 module.exports = function (app, route) {
   app.post("/webhook", function (req, res, next) {
-    parse.checkList(req.body.message);
-
-
-    // slackbot.message("dteixeira", JSON.stringify(req.body));
-
-    res.send({ status: 200 });
+    try {
+      if (!req.body.message.isArray) {
+        res.send({ status: 400 });
+      } else {
+        parse.checkList(req.body.message);
+        res.send({ status: 200 });
+      }
+    } catch (err) {
+      console.log(err);
+        res.send({ status: 400 });
+    }
   });
 
   app.post("/webhook/add/:username", function (req, res, next) {
