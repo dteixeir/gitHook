@@ -7,7 +7,7 @@ var users = [];
 var bot = {
   message: function (body, message) {
     var obj = new Bot({
-      token: config.UPLOAD_KEY,
+      token: (process.env.UPLOAD_KEY || config.UPLOAD_KEY),
       name: 'test'
     });
 
