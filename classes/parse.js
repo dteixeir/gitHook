@@ -6,7 +6,7 @@ var parse = {
     changedFiles.forEach(function (element) {
       hitList.forEach((listItem) => {
         if (listItem.file == element) {
-          slackbot.message(listItem.fixer, JSON.stringify(element));
+          slackbot.message(listItem.fixer, listItem.message + JSON.stringify(element));
         }
       });
     }, this);
