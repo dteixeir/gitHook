@@ -4,10 +4,7 @@ var cors = require('cors');
 var _ = require('lodash');
 var bodyParser = require("body-parser"); 
 
-var app = express();
-
-app.use(cors());
-
+var app = express().use(cors());
 var port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({extended: true}));

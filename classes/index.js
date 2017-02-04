@@ -1,3 +1,3 @@
 module.exports = {
-    //slackBot: require('./slackBot.js')
+    slackBot: require('./slackBot.js')
 };
