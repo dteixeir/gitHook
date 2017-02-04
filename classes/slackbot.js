@@ -2,7 +2,7 @@ var Bot = require('slackbots');
 var Slack = require('node-slack-upload');
 var users = [];
 
-if (process.env) {
+if (!process.env) {
   var config = require('../config.json');
 }
 
