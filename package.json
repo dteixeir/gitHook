@@ -11,7 +11,8 @@
     "lodash": "^4.15.0",
     "node-slack-upload": "^1.1.1",
     "q": "^1.4.1",
-    "slackbots": "^0.5.2"
+    "slackbots": "^0.5.2",
+    "nedb": "^1.8.0"
   },
   "engines": {
     "node": "6.4.0",
@@ -26,8 +27,5 @@
     "url": "https://github.com/dteixeir/gitHook.git"
   },
   "author": "Danny Teixeira",
-  "license": "ISC",
-  "devDependencies": {
-    "nedb": "^1.8.0"
-  }
+  "license": "ISC"
 }
