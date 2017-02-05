@@ -1,15 +1,42 @@
 var slackbot = require('./slackbot');
-var hitList = require('../hitList.json').hitList;
+var dal = require('./dal');
 
 var parse = {
-  checkList: function (changedFiles) {
-    changedFiles.forEach(function (element) {
-      hitList.forEach((listItem) => {
-        if (listItem.file == element) {
-          slackbot.message(listItem.fixer, listItem.message + JSON.stringify(element));
+  checkList: (changedFiles) => {
+    var users = {}; 
+    
+    changedFiles.forEach((element, i) => {
+      dal.select({ file: element }).then((docs) => {
+        
+        docs.forEach((listItem) => {
+          if (users.hasOwnProperty(listItem.fixer)) {
+            users[listItem.fixer].push(element);
+          } else {
+            users[listItem.fixer] = [];
+            users[listItem.fixer].push(element);
+          }
+        });
+
+        if (i == changedFiles.length - 1) {
+          parse.sendMessage(users);
         }
+
       });
-    }, this);
+    }); 
+  },
+
+  sendMessage: (users) => {
+    for (var key in users) {
+      if (users.hasOwnProperty(key)) {
+        message = 'Please update your project, the follow files were changed in FrakWorx: \n';
+
+        users[key].forEach((file) => {
+          message = message + file + "\n";
+        });
+
+        slackbot.message(key, message);
+      }
+    }
   }
 }
 

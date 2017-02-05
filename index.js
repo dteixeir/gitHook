@@ -2,7 +2,11 @@ var express = require('express');
 var fs = require('fs');
 var cors = require('cors');
 var _ = require('lodash');
-var bodyParser = require("body-parser"); 
+var bodyParser = require("body-parser");
+var Datastore = require('nedb');
+
+db = new Datastore({ filename: './db/data.json' });
+db.loadDatabase();
 
 var app = express().use(cors());
 var port = process.env.PORT || 3000;

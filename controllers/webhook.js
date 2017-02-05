@@ -1,49 +1,44 @@
 var parse = require('../classes/parse');
+var dal = require('../classes/dal');
 
 module.exports = function (app, route) {
-  app.post("/webhook", function (req, res, next) {
+  app.post("/webhook", (req, res, next) => {
     try {
       if (!req.body.message instanceof Array) {
-        res.send({ status: 400 });
+        res.status(400).send();
       } else {
         parse.checkList(req.body.message);
         res.send({ status: 200 });
       }
     } catch (err) {
-      console.log(err);
-        res.send({ status: 400 });
+      res.status(400).send();
     }
   });
 
-  app.post("/webhook/add/:username", function (req, res, next) {
-    if (slackbot.addUser(req.params.username)) {
-      res.send({ status: 200 });
+  app.post("/webhook/add", (req, res, next) => {
+    if (req.body.fixer && req.body.file && req.body.message) {
+      dal.insert(req.body).then((docs) => {
+        res.send(docs);
+      });
     } else {
-      res.send({ status: 400 });
+      res.status(400).send();
     }
   });
 
-  app.post("/webhook/remove/:username", function (req, res, next) {
-    if (slackbot.removeUser(req.params.username)) {
-      res.send({ status: 200 });
-    } else {
-      res.send({ status: 400 });
-    }
+  app.get("/webhook/file/:name?", (req, res, next) => {
+    var filter = { file: req.params.name } || {};
+
+    dal.select(filter).then((docs) => {
+      res.send(docs);
+    });
   });
 
-  app.get("/webhook/users", function (req, res, next) {
-      res.send({ data: JSON.stringify(slackbot.getUsers()) });
-  });
+  app.get("/webhook/fixer/:name?", (req, res, next) => {
+    filter = { fixer: req.params.name } || {};
 
-  app.post('/webhook/snippet', function (req, res, next) {
-      var headers = JSON.stringify(req.headers);
-      var body = JSON.stringify(req.body);
-
-      if (slackbot.snippet(headers, body)) {
-          res.send({ status: 200 });
-      } else {
-          res.send({ status: 400 });
-      }
+    dal.select(filter).then((docs) => {
+      res.send(docs);
+    });
   });
 
   // Return middleware ?? per use case stuff?
