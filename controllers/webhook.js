@@ -16,7 +16,7 @@ module.exports = function (app, route) {
   });
 
   app.post("/webhook/add", (req, res, next) => {
-    if (req.body.fixer && req.body.file && req.body.message) {
+    if (req.body.username && req.body.file && req.body.message) {
       dal.insert(req.body).then((docs) => {
         res.send(docs);
       });
@@ -33,8 +33,8 @@ module.exports = function (app, route) {
     });
   });
 
-  app.get("/webhook/fixer/:name?", (req, res, next) => {
-    filter = { fixer: req.params.name } || {};
+  app.get("/webhook/username/:name?", (req, res, next) => {
+    filter = { username: req.params.name } || {};
 
     dal.select(filter).then((docs) => {
       res.send(docs);

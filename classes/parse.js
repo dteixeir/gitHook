@@ -9,11 +9,11 @@ var parse = {
       dal.select({ file: element }).then((docs) => {
         
         docs.forEach((listItem) => {
-          if (users.hasOwnProperty(listItem.fixer)) {
-            users[listItem.fixer].push(element);
+          if (users.hasOwnProperty(listItem.username)) {
+            users[listItem.username].push(element);
           } else {
-            users[listItem.fixer] = [];
-            users[listItem.fixer].push(element);
+            users[listItem.username] = [];
+            users[listItem.username].push(element);
           }
         });
 
